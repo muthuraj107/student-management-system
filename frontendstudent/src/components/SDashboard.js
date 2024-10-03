@@ -1,14 +1,14 @@
-import React ,{useEffect,useState}from 'react';
-import {  FaUserGraduate } from 'react-icons/fa';
-import Header from './Header'
-import axios from 'axios';
-import './SDashboard.css'
+import React, { useEffect, useState } from "react";
+import { FaUserGraduate } from "react-icons/fa";
+import Header from "./Header";
+import axios from "axios";
+import "./SDashboard.css";
 
-const SDashboard = () => {
+const Staffdashboard = () => {
   const [data, setData] = useState();
   const getData = async () => {
     try {
-      const user = await axios.get('http://localhost:4000/api/std/data');
+      const user = await axios.get("http://localhost:4000/api/std/data");
       console.log(user.data);
       console.log(user.headers);
       console.log(user.config);
@@ -22,7 +22,6 @@ const SDashboard = () => {
     getData();
   }, []);
 
-  
   return (
     <div>
       <Header />
@@ -67,6 +66,6 @@ const SDashboard = () => {
       </table>
     </div>
   );
-}
+};
 
-export default SDashboard
+export default Staffdashboard;

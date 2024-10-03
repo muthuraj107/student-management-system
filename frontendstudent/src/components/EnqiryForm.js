@@ -144,7 +144,6 @@ const EnqiryForm = () => {
           <select name="Education_status" value={formData.Education_status} onChange={handleChange} required>
             <option value="">Select Status</option>
             <option value="Undergraduate">Undergraduate</option>
-            <option value="Graduate">Graduate</option>
             <option value="Postgraduate">Postgraduate</option>
             <option value="Other">Other</option>
           </select>

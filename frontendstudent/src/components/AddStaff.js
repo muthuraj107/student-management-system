@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './StaffForm.css';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 
@@ -11,7 +12,7 @@ const StaffForm = () => {
     password:""
   });
 
-
+const navigate=useNavigate()
   const handleInput = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -26,6 +27,7 @@ const StaffForm = () => {
       const response = await axios.post("http://localhost:4000/api/staff/post", formData);
   
       alert("your response add in db")
+    navigate("/dashboard");
     } catch (error) {
       console.log(error);
     }

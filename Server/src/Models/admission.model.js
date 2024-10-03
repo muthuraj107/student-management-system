@@ -34,6 +34,7 @@ const addmissionSchema = mongoose.Schema(
     referredBy: String,
     counseledBy: String,
     mode: String,
+    degree:String,
     is_active: { type: Boolean, default: false },
     is_login: { type: Boolean, default: false },
     is_deleted: { type: Boolean, default: false },
