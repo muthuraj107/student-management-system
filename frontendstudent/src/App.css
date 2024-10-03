@@ -1,0 +1,222 @@
+/* General body styling */
+*{
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, sans-serif; /* Sets the font to Arial, with sans-serif as a fallback */
+  background-color: #f0f4f7;      /* Light background color */
+  margin: 0;                      /* Removes default margin */
+  padding: 0;                     /* Removes default padding */
+}
+
+/* Container styling to centralize the content */
+.container {
+  width: 100%;                    /* Full width container */
+  margin: 20px auto;              /* Adds margin around the container */
+  background-color: #fff;         /* White background */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow around the box */
+  padding: 20px;                  /* Inner padding for spacing */
+}
+
+/* Header section styling */
+.header {
+  background-color: #090de3;      /* Dark background color */
+  color: #fff;                    /* White text */
+  padding: 10px;                  /* Padding inside the header */
+  display: flex;                  /* Flexbox layout for aligning items */
+  justify-content: space-between; /* Space between title and nav */
+  align-items: center;            /* Vertically align items in the middle */
+  gap: 20px;
+
+}
+
+/* Header title styling */
+.header h1 {
+  margin: 0;                      /* Remove default margin */
+  font-size: 24px;                /* Set font size */
+}
+
+/* Navigation styling */
+.header .nav {
+  display: flex;                  /* Horizontal flexbox layout for the nav items */
+  justify-content: flex-end;      /* Align items to the right */
+  align-items: center;            /* Vertically align nav items */
+
+}
+
+.header .nav a {
+  color: #fff;                    /* White link color */
+  text-decoration: none;          /* Remove underline from links */
+  padding: 10px 20px;             /* Padding for clickable area */
+  margin-left: 10px;              /* Space between nav items */
+  background-color: #090de3;      /* Background color for nav links */
+}
+
+.header .nav a:hover {
+  background-color: #555;         /* Darken the background on hover */
+}
+
+/* Stats section with cards */
+.stats {
+  display: flex;                  /* Flexbox to align cards horizontally */
+  justify-content: space-around;  /* Even spacing between cards */
+  margin: 20px 0;                 /* Space around the stats section */
+}
+
+/* Individual stat card styling */
+.stats .stat {
+  background-color: #f8f9fa;      /* Light grey background */
+  padding: 20px;                  /* Padding inside each stat card */
+  border-radius: 10px;            /* Rounded corners */
+  text-align: center;             /* Center the text */
+  width: 30%;                     /* Set card width */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+.stats .stat h3 {
+  margin: 0;                      /* Remove margin from headings */
+  font-size: 18px;                /* Font size for the stat title */
+  color: #333;                    /* Dark text color */
+}
+
+.stats .stat p {
+  font-size: 24px;                /* Larger font for stat numbers */
+  margin: 10px 0 0;               /* Spacing between stat title and number */
+  color: #333;                    /* Dark text color */
+}
+
+/* Search bar styling */
+/* Search bar styling */
+.search-bar {
+  display: flex;                  /* Flexbox layout for search input and button */
+  justify-content: center;        /* Center the search bar */
+  margin: 20px 0;                 /* Space around the search bar */
+}
+
+.search-bar input {
+  padding: 10px;                  /* Padding inside the input field */
+  width: 50%;                     /* Set input width */
+  border: 1px solid #ccc;         /* Light grey border */
+  border-radius: 5px 0 0 5px;     /* Rounded left corners */
+  height: 42px;                   /* Set equal height */
+  box-sizing: border-box; 
+  margin-right: 50px;        /* Include padding in the element's height */
+}
+
+.search-bar button {
+  padding: 10px 20px;             /* Padding inside the button */
+  border: none;                   /* Remove button border */
+  background-color: #28a745;      /* Green background */
+  color: #fff;                    /* White text */
+  border-radius:5px ;     /* Rounded right corners */
+  cursor: pointer;                /* Pointer cursor on hover */
+  height: 42px;                   /* Set equal height */
+  box-sizing: border-box;         /* Include padding in the element's height */
+}
+
+.search-bar button:hover {
+  background-color: #218838;      /* Darken button color on hover */
+}
+
+
+/* Table styling */
+table {
+  width: 100%;                    /* Full-width table */
+  border-collapse: collapse;      /* Remove gaps between cells */
+  margin: 20px 0;                 /* Space above and below the table */
+}
+
+table, th, td {
+  border: 1px solid #ddd;         /* Light grey border around the table */
+}
+
+th, td {
+  padding: 10px;                  /* Padding inside cells */
+  text-align: left;               /* Align text to the left */
+}
+
+th {
+  background-color: #f8f9fa;      /* Light background for table headers */
+}
+
+
+/* Dropdown container */
+.dropdown {
+  position: relative;             /* Position relative for absolute positioning of dropdown content */
+  display: block;          /* Inline-block to place dropdowns horizontally */
+  margin-left: 20px;              /* Add space between dropdowns */
+}
+.dropdown-2{
+  padding-right: 30px;
+}
+
+
+
+
+/* Dropdown content */
+.dropdown-content {
+  display: none;                  /* Hide by default */
+  position: absolute;             /* Absolute positioning for dropdown items */
+  background-color:#090de3; /* Light blue background */
+  width: 160px;
+  height: auto;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Shadow for the dropdown */
+  z-index: 1;                     /* Ensures dropdown is on top of other content */
+}
+
+.dropdown-content a {
+  color: black;                   /* Black text */
+  padding: 15px 16px;             /* Padding inside each dropdown link */
+  text-decoration: none;          /* Remove underline */
+  display: block;                 /* Block-level links to fill width */
+}
+
+
+/* Show dropdown content when hovering */
+.dropdown:hover .dropdown-content {
+  display: block;                 /* Display the dropdown content on hover */
+}
+
+
+/* Dropdown text (no button styling) */
+.dropdown span {
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+}
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  margin-right: 20px;
+}
+
+
+/* General header styling */
+
+
+/* Navigation links */
+.header .nav {
+  display: flex;
+  align-items: center;
+}
+
+.header .nav a {
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+  padding: 10px;
+}
+
+.header .nav a:hover {
+  background-color: #1e55df;
+  border-radius: 5px;
+}
+
+
+
+
+
+
+
+
