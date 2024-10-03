@@ -24,7 +24,7 @@ const navigate=useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();   //The e.preventDefault() method is called to prevent the default behavior of the form submission, which is to reload the page. 
     try {
-      const response = await axios.post("http://localhost:4000/api/staff/post", formData);
+       await axios.post("http://localhost:4000/api/staff/post", formData);
   
       alert("your response add in db")
     navigate("/dashboard");

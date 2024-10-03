@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate,useLocation } from "react-router-dom";
 import "../style/login.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const [activeTab, setActiveTab] = useState("admin");
-  const [staffEmail, setStaffEmail] = useState();
-  const [staffPassword, setStaffPassword] = useState();
-  const [adminEmail, setAdminEmail] = useState();
-  const [adminPassword, setAdminPassword] = useState();
+  const [staffEmail, setStaffEmail] = useState('');
+  const [staffPassword, setStaffPassword] = useState('');
+  const [adminEmail, setAdminEmail] = useState('');
+
+  const [adminPassword, setAdminPassword] = useState('');
+  const location = useLocation();
+
+  const navigate = useNavigate();
+  
   const showLogin = (type) => {
     setActiveTab(type);
     if (type === "admin") {
@@ -16,53 +22,63 @@ const Login = () => {
       document.body.style.backgroundColor = " white";
     }
   };
+  // Function to navigate to another page
+if(location.pathname==="/"){
+      localStorage.removeItem("role");
+}
 
-  const navigate = useNavigate();
   const defaultAdminEmail = "admin@gmail.com";
   const defaultAdminPassword = "admin";
 
-  // Function to navigate to another page
 
-  //admin login
-  const adminLogin = () => {
-    if (
-      adminEmail &&
-      defaultAdminEmail === adminEmail &&
-      defaultAdminPassword === adminPassword
-    ) {
-      localStorage.removeItem("role");
+const handleLogin = async () => {
+    if (activeTab === "admin") {
+     if (adminEmail === "" || adminPassword === "") {
+       alert("Please fill in all the fields.");
+       return;
+     }
 
-      localStorage.setItem("role", "Admin");
+     if (
+       adminEmail !== defaultAdminEmail ||
+       adminPassword !== defaultAdminPassword
+     ) {
+       alert("Incorrect admin email or password.");
+       return;
+     }
 
-      navigate(`/dashboard`);
-    } else {
-      alert("Invalid email or password");
-    }
-  };
-
-  //staff login
-  const staffLogin = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/api/staff/login",
-        {
-          email: staffEmail,
-          password: staffPassword,
-        }
-      );
-      if (response.data.success) {
-        localStorage.removeItem("role");
-
-        localStorage.setItem("role", "Staff");
-        navigate("/Staffdashboard");
-      } else {
-        window.alert("Invalid email or password");
+     localStorage.removeItem("role");
+     localStorage.setItem("role", "Admin");
+     navigate("/dashboard");
+    } 
+    else {
+      if (staffEmail === "" || staffPassword === "") {
+        alert("Please fill in all the fields.");
+        return;
       }
-    } catch (error) {
-      console.error(error);
+
+
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/api/staff/login",
+          {
+          email: staffEmail,
+          password: staffPassword,}
+        );
+        if (response.data.success) {
+          localStorage.removeItem("role");
+
+          localStorage.setItem("role", "Staff");
+          navigate("/Staffdashboard");
+        } else {
+          alert("Incorrect staff email or password.");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("An error occurred while logging in.");
+
+      }
     }
   };
-
   return (
     <div>
       <div className="header">
@@ -108,7 +124,7 @@ const Login = () => {
                   onChange={(e) => setAdminPassword(e.target.value)}
                 />
               </div>
-              <button className="login-button" onClick={() => adminLogin()}>
+              <button className="login-button" onClick={() => handleLogin()}>
                 Login
               </button>
             </div>
@@ -137,15 +153,16 @@ const Login = () => {
                   required
                 />
               </div>
-              <button className="login-button" onClick={() => staffLogin()}>
+              <button className="login-button" onClick={() => handleLogin()}>
                 Login
               </button>
             </div>
           )}
         </div>
+        
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Login ;

@@ -6,6 +6,8 @@ import "./SDashboard.css";
 
 const Staffdashboard = () => {
   const [data, setData] = useState();
+  const [filteredData, setFilteredData] = useState([]);
+const [searchQuery, setSearchQuery] = useState("");
   const getData = async () => {
     try {
       const user = await axios.get("http://localhost:4000/api/std/data");
@@ -21,7 +23,15 @@ const Staffdashboard = () => {
   useEffect(() => {
     getData();
   }, []);
-
+  const handleSearch = async () => {
+    const filteredData = data.filter((item) => {
+      return item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+    setFilteredData(filteredData);
+  };
+ const handleInputChange = (e) => {
+   setSearchQuery(e.target.value); 
+ };
   return (
     <div>
       <Header />
@@ -35,8 +45,13 @@ const Staffdashboard = () => {
 
         {/* Search Bar */}
         <div className="search-bar">
-          <input type="text" placeholder="Enter Student Name" />
-          <button>Search</button>
+          <input
+            type="text"
+            placeholder="Enter Student Name"
+            value={searchQuery}
+            onChange={handleInputChange}
+          />
+          <button onClick={() => handleSearch()}>Search</button>
         </div>
       </div>
       {/* Table Section */}
@@ -51,17 +66,28 @@ const Staffdashboard = () => {
           </tr>
         </thead>
         <tbody>
-          {data &&
-            data.map((item, index) => (
-              <tr>
-                {/* {" "} */}
-                <td> {index + 1} </td>
-                <td> {item.std_Id} </td>
-                <td> {item.name} </td>
-                <td>{item.email}</td>
-                <td>{item.age}</td>
-              </tr>
-            ))}
+          {filteredData?.length > 0
+            ? filteredData.map((item, index) => (
+                <tr>
+                  {/* {" "} */}
+                  <td> {index + 1} </td>
+                  <td> {item.stdId} </td>
+                  <td> {item.name} </td>
+                  <td>{item.email}</td>
+                  <td>{item.age}</td>
+                </tr>
+              ))
+            : data &&
+              data?.map((item, index) => (
+                <tr>
+                  {/* {" "} */}
+                  <td> {index + 1} </td>
+                  <td> {item.stdId} </td>
+                  <td> {item.name} </td>
+                  <td>{item.email}</td>
+                  <td>{item.age}</td>
+                </tr>
+              ))}
         </tbody>
       </table>
     </div>

@@ -10,7 +10,7 @@ exports.create=(req,res)=>{
     Course.save().
     then(user=>res.send(user)).catch((err) => {
       return res.status(500).send({
-        message: err.message || "Something went worng",
+        message: err.message || "Something went wrong",
       })
     })
     

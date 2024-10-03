@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, {  useEffect } from "react";
+import { Link,useNavigate } from "react-router-dom";
 
 const Header = () => {
   const role = localStorage.getItem("role");
-
+  const navigate=useNavigate()
+  const handleLogout = () => {
+    localStorage.removeItem("role");
+    navigate("/");
+  };
   return (
     <div className="header">
       <h1>{role && role} Dashboard</h1>
@@ -35,6 +39,10 @@ const Header = () => {
             <Link to={`/enqiryview`}>Enquiry</Link>
           </div>
         </div>
+       
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
       </nav>
     </div>
   );

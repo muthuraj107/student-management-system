@@ -39,6 +39,8 @@ const StudentDetails = () => {
     setIsPopupOpen(!isPopupOpen);
     setIsEditMode(false); // Reset edit mode when popup is closed
   };
+  console.log(updateid);
+  
 
   // Function to toggle edit mode
   const toggleEditMode = () => {
@@ -49,6 +51,8 @@ const StudentDetails = () => {
   //
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log(name,value);
+    
     setStudentDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value
@@ -56,12 +60,13 @@ const StudentDetails = () => {
   };
   //
   const updateData = async () => {
-    const update = await axios.put(`http://localhost:4000/api/std/put/${updateid}`);
+    const update = await axios.put(`http://localhost:4000/api/std/put/${updateid}`,studentDetails);
     console.log(update);
     setData((prevData) =>
       prevData.map((user) =>
         user._id === updateid ? { ...user, ...studentDetails } : user
       )
+
     );
 
   }
@@ -105,7 +110,7 @@ const StudentDetails = () => {
                   <input
                     type="text"
                     name="stdId"
-                    value={studentDetails.std_Id}
+                    value={studentDetails.stdId}
                     onChange={handleInputChange}
                     readOnly
                   />

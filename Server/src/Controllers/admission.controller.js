@@ -24,6 +24,7 @@ exports.create=(req,res)=>{
     const Admission = new admission({
       name,
       age,
+
       passOutYear,
       sslcMark,
       hscMark,
@@ -42,11 +43,11 @@ exports.create=(req,res)=>{
     });
     Admission.save()
     .then((data) => {
-      res.send(data);
+      res.send(data)
     })
     .catch((err) => {
       return res.status(500).send({
-        message: err.message || "Something went worng",
+        message: err.message || "Something went wrong",
       });
     });
 }
@@ -54,7 +55,7 @@ exports.create=(req,res)=>{
 exports.data=(req,res)=>{
   admission.find().then((user)=> res.send(user)).catch(err=>{
     res.status(400).send({
-      message: err.message || "Somthing wrong",
+      message: err.message || "Something wrong",
     });
   })
 }
@@ -63,7 +64,7 @@ exports.data=(req,res)=>{
 exports.update=(req,res)=>{
 if(!req.body){
   return res.status(400).send({
-    message: "Pleace fill all requried field",
+    message: "Please fill all required field",
   });
 }
 

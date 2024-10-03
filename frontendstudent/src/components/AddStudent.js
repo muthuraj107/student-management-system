@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import './StudentForm.css';
-
+import { useNavigate } from 'react-router-dom';
 const StudentForm = () => {
+const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     
     name: '',
@@ -23,7 +25,6 @@ const StudentForm = () => {
     counseledBy: '',
     mode: ''
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -31,13 +32,17 @@ const StudentForm = () => {
       [name]: value
     });
   };
+  const role=localStorage.getItem('role')
 
   const handleSubmit = async (e) => {
     e.preventDefault();   //The e.preventDefault() method is called to prevent the default behavior of the form submission, which is to reload the page. 
     try {
-      const response = await axios.post("http://localhost:4000/api/std/post", formData);
+      
+      await axios.post("http://localhost:4000/api/std/post", formData);
   
       alert("your response add in db")
+        navigate(role === "Admin" ? `/dashboard` : `/Staffdashboard`);
+
     } catch (error) {
       console.log(error);
     }
