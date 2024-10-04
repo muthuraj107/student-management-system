@@ -27,7 +27,6 @@ const ProtectedRouteAdmin = ({ component: Component, ...rest }) => {
   if (role !== "Admin") {
     return <Navigate to="/" />;
   }
-
   return <Component {...rest} />;
 };
 function App() {

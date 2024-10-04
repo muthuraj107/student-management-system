@@ -24,7 +24,6 @@ exports.create=(req,res)=>{
     const Admission = new admission({
       name,
       age,
-
       passOutYear,
       sslcMark,
       hscMark,

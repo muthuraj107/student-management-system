@@ -26,7 +26,6 @@ const Login = () => {
 if(location.pathname==="/"){
       localStorage.removeItem("role");
 }
-
   const defaultAdminEmail = "admin@gmail.com";
   const defaultAdminPassword = "admin";
 

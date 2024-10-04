@@ -1,48 +1,47 @@
-import React, { useState } from 'react';
-import axios from 'axios'
-import './StudentForm.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import "./StudentForm.css";
+import { useNavigate } from "react-router-dom";
 const StudentForm = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    
-    name: '',
-    age: '',
-    passOutYear: '',
-    sslcMark: '',
-    hscMark: '',
-    address: '',
-    degree: '',
-    phone: '',
-    courseName: '',
-    email: '',
-    gender: '',
-    courseStartDate: '',
-    courseEndDate: '',
-    preferredTime: '',
-    referredBy: '',
-    counseledBy: '',
-    mode: ''
+    name: "",
+    age: "",
+    passOutYear: "",
+    sslcMark: "",
+    hscMark: "",
+    address: "",
+    degree: "",
+    phone: "",
+    courseName: "",
+    email: "",
+    gender: "",
+    courseStartDate: "",
+    courseEndDate: "",
+    preferredTime: "",
+    referredBy: "",
+    counseledBy: "",
+    mode: "",
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
+
   };
-  const role=localStorage.getItem('role')
+  
+  const role = localStorage.getItem("role");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();   //The e.preventDefault() method is called to prevent the default behavior of the form submission, which is to reload the page. 
+    e.preventDefault(); //The e.preventDefault() method is called to prevent the default behavior of the form submission, which is to reload the page.
     try {
-      
       await axios.post("http://localhost:4000/api/std/post", formData);
-  
-      alert("your response add in db")
-        navigate(role === "Admin" ? `/dashboard` : `/Staffdashboard`);
 
+      alert("your response add in db");
+      navigate(role === "Admin" ? `/dashboard` : `/Staffdashboard`);
     } catch (error) {
       console.log(error);
     }
@@ -52,8 +51,6 @@ const navigate = useNavigate();
     <div className="form-container">
       <h2>Student Registration Form</h2>
       <form onSubmit={handleSubmit}>
-       
-
         <label htmlFor="name">Name:</label>
         <input
           type="text"
@@ -133,16 +130,20 @@ const navigate = useNavigate();
           onChange={handleChange}
           required
         />
-
         <label htmlFor="courseName">Course Name:</label>
-        <input
-          type="text"
+        <select
           id="courseName"
           name="courseName"
           value={formData.courseName}
           onChange={handleChange}
           required
-        />
+        >
+          <option value="">Select</option>
+          <option value="MERN Stack">MERN Stack</option>
+          <option value="Python">Python</option>
+          <option value="UI/UX">UI/UX</option>
+          <option value="DevOps">DevOps</option>
+        </select>
 
         <label htmlFor="email">Email:</label>
         <input

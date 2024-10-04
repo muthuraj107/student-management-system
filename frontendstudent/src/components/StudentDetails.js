@@ -80,7 +80,7 @@ const StudentDetails = () => {
           data.map((student, index) => (
             <div className="card">
               <div className="icon">
-                <IoPersonCircle size={60} className='i' />
+                <IoPersonCircle size={60} className="i" />
               </div>
               <div className="info">
                 <p className="name">{student.name}</p>
@@ -298,7 +298,61 @@ const StudentDetails = () => {
                 </li>
               </ul>
             </div>
-
+            <div className="details-box">
+              <h3>Frees Details</h3>
+              <ul>
+                <li>
+                  <label>Course Name: </label>
+                  <input
+                    type="text"
+                    name="courseName"
+                    value={studentDetails.courseName}
+                    onChange={handleInputChange}
+                    readOnly={!isEditMode}
+                  />
+                </li>
+                <li>
+                  <label>Total Frees: </label>
+                  <input
+                    type="text"
+                    name="preferredTime"
+                    value={studentDetails.preferredTime}
+                    onChange={handleInputChange}
+                    readOnly={!isEditMode}
+                  />
+                </li>
+                <li>
+                  <label>Paid Amount: </label>
+                  <input
+                    type="text"
+                    name="referredBy"
+                    value={studentDetails.referredBy}
+                    onChange={handleInputChange}
+                    readOnly={!isEditMode}
+                  />
+                </li>
+                <li>
+                  <label>Pending amount: </label>
+                  <input
+                    type="text"
+                    name="counseledBy"
+                    value={studentDetails.counseledBy}
+                    onChange={handleInputChange}
+                    readOnly={!isEditMode}
+                  />
+                </li>
+                <li>
+                  <label>Payment amount: </label>
+                  <input
+                    type="text"
+                    name="counseledBy"
+                    value={studentDetails.counseledBy}
+                    onChange={handleInputChange}
+                    readOnly={!isEditMode}
+                  />
+                </li>
+              </ul>
+            </div>
             <div className="button-group">
               <button onClick={togglePopup}>Close</button>
               <button

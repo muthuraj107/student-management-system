@@ -4,7 +4,7 @@ const admission = require("../Controllers/admission.controller");
 const course = require("../Controllers/course.controller");
 const staff = require("../Controllers/staff.controller");
 const enqiry = require("../Controllers/enqiry.controller");
-// const fees = require("../Models/FeesRecord.controller");
+const fees = require("../Controllers/feesRecord.controller");
 //addmision
 router.post("/std/post", admission.create);
 
@@ -34,8 +34,8 @@ router.post('/staff/login',staff.login)
 
 //fess
 
-// router.post("/std/fees/post", fees.create);
-
+router.post("/fees/post", fees.createFees);
+router.put("/fees/put/:stdId", fees.updatepayment);
 //enqiry
 router.get("/enqiry/data", enqiry.findall);
 router.post("/enqiry/post", enqiry.create);

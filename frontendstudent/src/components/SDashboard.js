@@ -8,6 +8,7 @@ const Staffdashboard = () => {
   const [data, setData] = useState();
   const [filteredData, setFilteredData] = useState([]);
 const [searchQuery, setSearchQuery] = useState("");
+
   const getData = async () => {
     try {
       const user = await axios.get("http://localhost:4000/api/std/data");
@@ -40,7 +41,7 @@ const [searchQuery, setSearchQuery] = useState("");
           <FaUserGraduate size={36} />
 
           <div>Student Total Count</div>
-          <div>200</div>
+          <div>{data?.length||10}</div>
         </div>
 
         {/* Search Bar */}
