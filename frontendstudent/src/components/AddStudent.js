@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import "./StudentForm.css";
 import { useNavigate } from "react-router-dom";
 const StudentForm = () => {
   const navigate = useNavigate();
-
+  const [courses,setCourses]=useState([])
   const [formData, setFormData] = useState({
     name: "",
     age: "",
@@ -16,34 +16,60 @@ const StudentForm = () => {
     phone: "",
     courseName: "",
     email: "",
+
     gender: "",
     courseStartDate: "",
     courseEndDate: "",
     preferredTime: "",
+    courseFees: "",
+    currentPayment: "",
     referredBy: "",
     counseledBy: "",
     mode: "",
   });
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-
-  };
+  
   
   const role = localStorage.getItem("role");
 
+useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/api/course/data");
+        setCourses(response.data); // Assuming the response data is an array of course objects
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    // If courseName is changed, update couresFees
+    if (name === "courseName") {
+      const selectedCourse = courses.find((course) => course.courseName === value);
+      setFormData((prevData) => ({
+        ...prevData,
+        courseFees: selectedCourse ? selectedCourse.courseFees : "",
+      }));
+    }
+  };
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault(); //The e.preventDefault() method is called to prevent the default behavior of the form submission, which is to reload the page.
+    e.preventDefault();
     try {
       await axios.post("http://localhost:4000/api/std/post", formData);
-
-      alert("your response add in db");
+      alert("Your response has been added to the database");
       navigate(role === "Admin" ? `/dashboard` : `/Staffdashboard`);
     } catch (error) {
-      console.log(error);
+      console.error("Error submitting form:", error);
     }
   };
 
@@ -130,20 +156,6 @@ const StudentForm = () => {
           onChange={handleChange}
           required
         />
-        <label htmlFor="courseName">Course Name:</label>
-        <select
-          id="courseName"
-          name="courseName"
-          value={formData.courseName}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select</option>
-          <option value="MERN Stack">MERN Stack</option>
-          <option value="Python">Python</option>
-          <option value="UI/UX">UI/UX</option>
-          <option value="DevOps">DevOps</option>
-        </select>
 
         <label htmlFor="email">Email:</label>
         <input
@@ -169,6 +181,31 @@ const StudentForm = () => {
           <option value="Other">Other</option>
         </select>
 
+        <label htmlFor="courseName">Course Name:</label>
+        <select
+          id="courseName"
+          name="courseName"
+          value={formData.courseName}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select</option>
+          {courses.map((course) => (
+            <option key={course.id} value={course.courseName}>
+              {course.courseName}
+            </option>
+          ))}
+        </select>
+
+        <label htmlFor="couresFees">Course Fees:</label>
+        <input
+          type="text"
+          id="couresFees"
+          name="couresFees"
+          value={formData.courseFees}
+          readOnly
+        />
+
         <label htmlFor="courseStartDate">Course Start Date:</label>
         <input
           type="date"
@@ -189,6 +226,15 @@ const StudentForm = () => {
           required
         />
 
+        <label htmlFor="currentPayment"> currentPayment:</label>
+        <input
+          type="currentPayment"
+          id="currentPayment"
+          name="currentPayment"
+          value={formData.currentPayment}
+          onChange={handleChange}
+          required
+        />
         <label htmlFor="preferredTime">Preferred Time:</label>
         <input
           type="text"

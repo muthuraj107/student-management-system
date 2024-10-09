@@ -7,7 +7,6 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [data, setData] = useState([]);
-
   const handleSearch = async () => {
     const filteredData = data.filter((item) => {
       return item.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -18,11 +17,17 @@ const Dashboard = () => {
   const getData = async () => {
     try {
       const user = await axios.get("http://localhost:4000/api/staff/data");
+
       setData(user.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  
+
+  
+
 
   useEffect(() => {
     getData();
@@ -45,19 +50,20 @@ const Dashboard = () => {
 const Stats = () => {
 const [data, setData] = useState();
    const [dataStd, setDataStd] = useState();
-  
+    const [student, setStudent] = useState();
+
    const getData = async () => {
      try {
        const user = await axios.get("http://localhost:4000/api/staff/data");
        const userStudent = await axios.get(
          "http://localhost:4000/api/std/data"
        );
-       console.log(user.data);
-       console.log(user.headers);
-       console.log(user.config);
-       console.log(user.request);
+             const std = await axios.get("http://localhost:4000/api/std/data");
+
        setData(user.data);
        setDataStd(userStudent.data)
+             setStudent(std.data);
+
      } catch (error) {
        console.log(error);
      }
@@ -65,22 +71,27 @@ const [data, setData] = useState();
    useEffect(() => {
      getData();
    }, []);
+   const filterAmount = student
+     ?.map((item) => item.paidAmount)
+     ?.reduce((sum, num) => {
+       return sum + num;
+     });
   return (
     <div className="stats">
       <div className="stat">
         <FaUsers size={36} />
         <h3>Staff Total Count</h3>
-        <p>{data?.length||10}</p>
+        <p>{data?.length || 10}</p>
       </div>
       <div className="stat">
         <FaUserGraduate size={36} />
         <h3>Student Total Count</h3>
-        <p>{dataStd?.length||50}</p>
+        <p>{dataStd?.length || 50}</p>
       </div>
       <div className="stat">
         <FaRupeeSign size={36} />
         <h3>Amount Collected</h3>
-        <p>$5000</p>
+        <p> &#8377;{filterAmount || 4000}</p>
       </div>
     </div>
   );

@@ -8,95 +8,128 @@ import axios from 'axios';
 const StudentDetails = () => {
   const [data, setData] = useState();
   const [studentDetails, setStudentDetails] = useState();
+
+  // State to manage popup visibility and edit mode
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false); // New state for edit mode
   const [updateid, setupdateid] = useState();
 
+  const [filter, setFilter] = useState("all");
   const getData = async () => {
     try {
-      const user = await axios.get('http://localhost:4000/api/std/data');
-      console.log(user.data);
-      console.log(user.headers);
-      console.log(user.config);
-      console.log(user.request);
+      const user = await axios.get("http://localhost:4000/api/std/data");
+
       setData(user.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getData();
-  }, []);
+    getData()
+  }, [updateid]);
 
   // popup
 
-  // State to manage popup visibility and edit mode
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isEditMode, setIsEditMode] = useState(false); // New state for edit mode
-
   // Function to toggle popup visibility
   const togglePopup = (student) => {
-    setupdateid(student._id)
-    setStudentDetails(student)
+    setupdateid(student._id);
+    setStudentDetails(student);
     setIsPopupOpen(!isPopupOpen);
     setIsEditMode(false); // Reset edit mode when popup is closed
   };
-  console.log(updateid);
-  
 
   // Function to toggle edit mode
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
-
   };
 
   //
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name,value);
-    
+    console.log(name, value);
+
     setStudentDetails((prevDetails) => ({
       ...prevDetails,
-      [name]: value
+      [name]: value,
     }));
   };
   //
   const updateData = async () => {
-    const update = await axios.put(`http://localhost:4000/api/std/put/${updateid}`,studentDetails);
-    console.log(update);
+     await axios.put(
+      `http://localhost:4000/api/std/put/${updateid}`,
+      studentDetails
+    );
     setData((prevData) =>
-      prevData.map((user) =>
+      prevData?.map((user) =>
         user._id === updateid ? { ...user, ...studentDetails } : user
       )
-
     );
+  };
+  // Function to determine course status
+  const getCourseStatus = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const current = new Date();
+    return current >= start && current <= end ? "Ongoing" : "Passout";
+  };
 
-  }
+  // Function to filter students based on status
+  const filteredData = data?.filter((student) => {
+    const status = getCourseStatus(
+      student.courseStartDate,
+      student.courseEndDate
+    );
+    if (filter === "all") return true;
+    return status.toLowerCase() === filter;
+  });
   return (
     <div>
       <Header />
       <h2>Student Details</h2>
 
-      <div className="cardmain">
-        {data &&
-          data.map((student, index) => (
-            <div className="card">
-              <div className="icon">
-                <IoPersonCircle size={60} className="i" />
-              </div>
-              <div className="info">
-                <p className="name">{student.name}</p>
-                <p className="email">{student.email}</p>
-                <p className="stack">{student.courseName}</p>
-                <a
-                  href="#"
-                  className="details-link"
-                  onClick={() => togglePopup(student)}
-                >
-                  View Details
-                </a>
-              </div>
-            </div>
-          ))}
+      {/* Filter Options */}
+      <div className="filter-options">
+        <button onClick={() => setFilter("all")}>All</button>
+        <button onClick={() => setFilter("ongoing")}>Ongoing</button>
+        <button onClick={() => setFilter("passout")}>Passout</button>
       </div>
+
+      <div className="cardmain">
+        {filteredData?.map((student, index) => (
+          <div className="card" key={index}>
+            <div className="icon">
+              <IoPersonCircle size={60} className="i" />
+            </div>
+            <div className="info">
+              <p className="name">{student.name}</p>
+              <p className="email">{student.email}</p>
+              <p className="stack">{student.courseName}</p>
+
+              {/* Display the course status */}
+              <p
+                className={`status ${getCourseStatus(
+                  student.courseStartDate,
+                  student.courseEndDate
+                ).toLowerCase()}`}
+              >
+                {getCourseStatus(
+                  student.courseStartDate,
+                  student.courseEndDate
+                )}
+              </p>
+
+              <a
+                href="#"
+                className="details-link"
+                onClick={() => togglePopup(student)}
+              >
+                View Details
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {isPopupOpen && (
         <div className="popup-overlay">
           <div className="popup">
@@ -315,8 +348,8 @@ const StudentDetails = () => {
                   <label>Total Frees: </label>
                   <input
                     type="text"
-                    name="preferredTime"
-                    value={studentDetails.preferredTime}
+                    name="couresFees"
+                    value={studentDetails.courseFees}
                     onChange={handleInputChange}
                     readOnly={!isEditMode}
                   />
@@ -325,8 +358,8 @@ const StudentDetails = () => {
                   <label>Paid Amount: </label>
                   <input
                     type="text"
-                    name="referredBy"
-                    value={studentDetails.referredBy}
+                    name="paid"
+                    value={studentDetails.paidAmount}
                     onChange={handleInputChange}
                     readOnly={!isEditMode}
                   />
@@ -335,8 +368,8 @@ const StudentDetails = () => {
                   <label>Pending amount: </label>
                   <input
                     type="text"
-                    name="counseledBy"
-                    value={studentDetails.counseledBy}
+                    name="pending"
+                    value={studentDetails.pendingAmount}
                     onChange={handleInputChange}
                     readOnly={!isEditMode}
                   />
@@ -345,24 +378,23 @@ const StudentDetails = () => {
                   <label>Payment amount: </label>
                   <input
                     type="text"
-                    name="counseledBy"
-                    value={studentDetails.counseledBy}
+                    name="currentPayment"
+                    value={studentDetails.currentPayment}
                     onChange={handleInputChange}
                     readOnly={!isEditMode}
                   />
                 </li>
               </ul>
             </div>
+
             <div className="button-group">
               <button onClick={togglePopup}>Close</button>
               <button
                 onClick={() => {
                   if (isEditMode) {
-                    updateData(); // Call save function
-                  } else {
-                    // Call edit function
+                    updateData();
                   }
-                  toggleEditMode(); // Toggle the mode
+                  toggleEditMode();
                 }}
               >
                 {isEditMode ? "Save" : "Edit"}

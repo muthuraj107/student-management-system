@@ -1,108 +1,131 @@
-const admission=require('../Models/admission.model')
+const admission = require("../Models/admission.model");
 
+exports.create = (req, res) => {
+  const {
+    name,
+    age,
+    passOutYear,
+    sslcMark,
+    hscMark,
+    address,
+    phone,
+    courseName,
+    courseFees,
+    currentPayment,
+    email,
+    gender,
+    degree,
+    courseStartDate,
+    courseEndDate,
+    preferredTime,
+    referredBy,
+    counseledBy,
+    mode,
+  } = req.body;
 
-exports.create=(req,res)=>{
-    const {
-      name,
-      age,
-      passOutYear,
-      sslcMark,
-      hscMark,
-      address,
-      phone,
-      courseName,
-      email,
-      gender,
-      degree,
-      courseStartDate,
-      courseEndDate,
-      preferredTime,referredBy,
-      counseledBy,
-      mode,
-    } = req.body;
-
-    const Admission = new admission({
-      name,
-      age,
-      passOutYear,
-      sslcMark,
-      hscMark,
-      address,
-      phone,
-      courseName,
-      email,
-      gender,
-      degree,
-      courseStartDate,
-      courseEndDate,
-      preferredTime,
-      referredBy,
-      counseledBy,
-      mode,
-    });
-    Admission.save()
+  const Admission = new admission({
+    name,
+    age,
+    passOutYear,
+    sslcMark,
+    hscMark,
+    address,
+    phone,
+    courseName,
+    courseFees,
+    currentPayment,
+    email,
+    gender,
+    degree,
+    courseStartDate,
+    courseEndDate,
+    preferredTime,
+    referredBy,
+    counseledBy,
+    mode,
+  });
+  Admission.save()
     .then((data) => {
-      res.send(data)
+      res.send(data);
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Something went wrong",
       });
     });
-}
+};
 
-exports.data=(req,res)=>{
-  admission.find().then((user)=> res.send(user)).catch(err=>{
-    res.status(400).send({
-      message: err.message || "Something wrong",
+exports.data = (req, res) => {
+  admission
+    .find()
+    .then((user) => res.send(user))
+    .catch((err) => {
+      res.status(400).send({
+        message: err.message || "Something wrong",
+      });
     });
-  })
-}
+};
 
+exports.update = async (req, res) => {
+  // Validate request
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).send({
+      message: "Please provide data to update.",
+    });
+  }
 
-exports.update=(req,res)=>{
-if(!req.body){
-  return res.status(400).send({
-    message: "Please fill all required field",
-  });
-}
+  try {
+    // Find the admission record by its ID
+    const admissionRecord = await admission.findById(req.params.id);
 
-const updateData={...req.body}
-admission.findByIdAndUpdate(
-    req.params.id,
-    updateData,
-    { new: true }
-  )
-  .then((user) => {
-    if (!user) {
+    if (!admissionRecord) {
       return res.status(404).send({
-        message: "user not found with id" + req.params.id,
+        message: "Admission record not found with id " + req.params.id,
       });
     }
-    res.send(user);
-  })
-  .catch((err) => {
-    if (!err.kind === "objectid") {
-      return res.status(500).send({
-        message: err.message || "user not found with id".req.params.id,
+
+    // If currentPayment is provided, update the paid and pending amounts
+    if (req.body.currentPayment) {
+      const currentPayment = parseInt(req.body.currentPayment, 10) || 0;
+
+      // Update paid
+      admissionRecord.currentPayment = currentPayment;
+      admissionRecord.calculateAmounts();
+    }
+
+    // Update other fields with the incoming request data
+    const updateData = { ...req.body };
+
+    // Apply updated values to the admissionRecord
+    Object.assign(admissionRecord, updateData);
+
+    // Save the updated admission record
+    const updatedAdmission = await admissionRecord.save();
+
+    res.send(updatedAdmission);
+  } catch (err) {
+    console.error("Error details:", err);
+    if (err.kind === "ObjectId") {
+      return res.status(404).send({
+        message: "Admission record not found with id " + req.params.id,
       });
     }
     return res.status(500).send({
-      message: err.message || "Something went worng",
+      message: "Error updating admission with id " + req.params.id,
     });
-  });
-}
+  }
+};
 
-
-exports.delete=(req,res)=>{
-  admission.findOneAndDelete({ _id: req.params.id })
+exports.delete = (req, res) => {
+  admission
+    .findOneAndDelete({ _id: req.params.id })
     .then((user) => {
       if (!user) {
         return res
           .status(404)
           .send({ message: "User not found " + req.params.id });
       }
-      res.send({ Message: "User Deleted Successfully!!!",data:user.data });
+      res.send({ Message: "User Deleted Successfully!!!", data: user.data });
     })
     .catch((err) => {
       if (err.kind === "ObjectId" || err.name === "NOt Found") {
@@ -114,8 +137,7 @@ exports.delete=(req,res)=>{
         message: "Error getting user with id" + req.params.id,
       });
     });
-
-}
+};
 
 //  const updateData = {};
 

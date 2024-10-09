@@ -12,10 +12,7 @@ const StaffDetails = () => {
   const getData = async () => {
     try {
       const user = await axios.get('http://localhost:4000/api/staff/data');
-      console.log(user.data);
-      console.log(user.headers);
-      console.log(user.config);
-      console.log(user.request);
+
       setData(user.data);
     } catch (error) {
       console.log(error);
