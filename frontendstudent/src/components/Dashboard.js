@@ -7,69 +7,62 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [data, setData] = useState([]);
-  const handleSearch = async () => {
-    const filteredData = data.filter((item) => {
+  const [student, setStudent] = useState([]);
+
+  // Function to handle the search logic
+  const handleSearch = () => {
+    const filteredData = data?.filter((item) => {
       return item.name.toLowerCase().includes(searchQuery.toLowerCase());
     });
     setFilteredData(filteredData);
   };
 
+  // Function to fetch staff and student data
   const getData = async () => {
     try {
-      const user = await axios.get("http://localhost:4000/api/staff/data");
+      const staffResponse = await axios.get(
+        "http://localhost:4000/api/staff/data"
+      );
+      const studentResponse = await axios.get(
+        "http://localhost:4000/api/std/data"
+      );
 
-      setData(user.data);
+      setData(staffResponse.data || []);
+      setStudent(studentResponse.data || []);
     } catch (error) {
       console.log(error);
     }
   };
+
+  // Effect to fetch data on component mount
   useEffect(() => {
     getData();
   }, []);
 
+  // Call handleSearch whenever searchQuery changes
+  useEffect(() => {
+    handleSearch();
+  }, [searchQuery, data]); // Add 'data' to dependencies to ensure filteredData updates correctly
+
   return (
     <div className="dashboard">
       <Header />
-      <Stats />
+      <Stats data={data} student={student} />
       <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        handleSearch={handleSearch}
+        handleSearch={handleSearch} // Pass handleSearch as a prop
       />
       <StaffTable data={filteredData.length > 0 ? filteredData : data} />
     </div>
   );
 };
 
-const Stats = () => {
-const [data, setData] = useState();
-   const [dataStd, setDataStd] = useState();
-    const [student, setStudent] = useState();
+const Stats = ({ data, student }) => {
+  const filterAmount = student
+    ?.map((item) => item.paidAmount)
+    ?.reduce((sum, num) => sum + num, 0); // Provide initial value
 
-   const getData = async () => {
-     try {
-       const user = await axios.get("http://localhost:4000/api/staff/data");
-       const userStudent = await axios.get(
-         "http://localhost:4000/api/std/data"
-       );
-      const std = await axios.get("http://localhost:4000/api/std/data");
-
-       setData(user.data);
-       setDataStd(userStudent.data)
-             setStudent(std.data);
-
-     } catch (error) {
-       console.log(error);
-     }
-   };
-   useEffect(() => {
-     getData();
-   }, []);
-   const filterAmount = student
-     ?.map((item) => item.paidAmount)
-     ?.reduce((sum, num) => {
-       return sum + num;
-     });
   return (
     <div className="stats">
       <div className="stat">
@@ -80,16 +73,15 @@ const [data, setData] = useState();
       <div className="stat">
         <FaUserGraduate size={36} />
         <h3>Student Total Count</h3>
-        <p>{dataStd?.length || 50}</p>
+        <p>{student?.length || 50}</p>
       </div>
       <div className="stat">
         <FaRupeeSign size={36} />
         <h3>Amount Collected</h3>
-        <p> &#8377;{filterAmount || 400000}</p>
+        <p>&#8377;{filterAmount || 400000}</p>
       </div>
     </div>
   );
-
 };
 
 const SearchBar = ({ searchQuery, setSearchQuery, handleSearch }) => {
@@ -125,16 +117,17 @@ const StaffTable = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {data &&
-          data.map((item, index) => (
-            <tr>
-              <td> {index + 1} </td>
-              <td> {item.staffId} </td>
-              <td> {item.name} </td>
-              <td>{item.email}</td>
-              <td>**********</td>
-            </tr>
-          ))}
+        {data?.map((item, index) => (
+          <tr key={item.staffId}>
+            {" "}
+            {/* Added key prop */}
+            <td>{index + 1}</td>
+            <td>{item.staffId}</td>
+            <td>{item.name}</td>
+            <td>{item.email}</td>
+            <td>**********</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
