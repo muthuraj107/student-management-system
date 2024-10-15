@@ -78,6 +78,8 @@ const handleLogin = async () => {
       }
     }
   };
+  console.log(adminEmail,adminPassword);
+  
   return (
     <div>
       <div className="header">

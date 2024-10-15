@@ -18,6 +18,8 @@ router.post("/course/post", course.create);
 
 router.get("/course/data", course.data);
 
+router.put('/course/put/:id',course.update)
+router.delete('/course/delete/:id',course.remove)
 //staff
 
 router.post("/staff/post", staff.create);

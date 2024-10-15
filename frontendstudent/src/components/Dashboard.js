@@ -23,12 +23,6 @@ const Dashboard = () => {
       console.log(error);
     }
   };
-
-  
-
-  
-
-
   useEffect(() => {
     getData();
   }, []);
@@ -58,7 +52,7 @@ const [data, setData] = useState();
        const userStudent = await axios.get(
          "http://localhost:4000/api/std/data"
        );
-             const std = await axios.get("http://localhost:4000/api/std/data");
+      const std = await axios.get("http://localhost:4000/api/std/data");
 
        setData(user.data);
        setDataStd(userStudent.data)
@@ -91,7 +85,7 @@ const [data, setData] = useState();
       <div className="stat">
         <FaRupeeSign size={36} />
         <h3>Amount Collected</h3>
-        <p> &#8377;{filterAmount || 4000}</p>
+        <p> &#8377;{filterAmount || 400000}</p>
       </div>
     </div>
   );

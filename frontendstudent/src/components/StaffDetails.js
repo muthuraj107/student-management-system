@@ -31,37 +31,46 @@ const StaffDetails = () => {
 
   return (
     <div>
-      <Header/>
+      <Header />
+      <br />
+      <br />
       <h2>Staff Details</h2>
+      <br />
+      <br />
       <table>
-      <thead>
-        <tr>
-          <th>S.No</th>
-          <th>Staff ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Password</th>
-          <th>Delete</th>
-          
-        </tr>
-      </thead>
-      <tbody>
-      {data &&
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Staff ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data &&
             data.map((item, index) => (
               <tr>
                 {/* {" "} */}
-                <td> {index +1} </td>
+                <td> {index + 1} </td>
                 <td> {item.staffId} </td>
                 <td> {item.name} </td>
                 <td>{item.email}</td>
                 <td>**********</td>
                 <td className="actions">
-              <button onClick={()=>{removeData(item._id)}}>Delete</button>
-            </td>
+                  <button
+                    onClick={() => {
+                      removeData(item._id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
     </div>
   );
 };

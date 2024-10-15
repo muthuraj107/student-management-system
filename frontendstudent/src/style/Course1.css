@@ -1,0 +1,148 @@
+/* Style for course header */
+.course-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: blue; /* Optional background color */
+  position: relative; /* Ensure proper positioning for the button */
+}
+
+.course-page-nav {
+  display: flex;
+  flex: 1;
+}
+
+.course-page-nav a {
+  text-decoration: none;
+  font-size: 25px;
+  font-style: oblique;
+  color: #fff; /* White text for the header links */
+}
+
+.course-page-logout-button {
+  padding: 8px 16px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+  position: absolute;
+  right: 20px; /* Aligns button to the right edge */
+}
+
+.course-page-logout-button:hover {
+  background-color: #e60000;
+}
+
+/* Form centering and size adjustments */
+.course-form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40px; /* Space between header and form */
+}
+
+.course-page-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  width: 50%; /* Set form width */
+}
+
+.course-page-form input,
+.course-page-form button {
+  margin-bottom: 15px;
+  padding: 12px;
+  font-size: 16px;
+  width: 50%; /* Input boxes and button width set to 50% */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.course-page-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.course-page-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Style for the table */
+.course-page-table {
+  margin: 20px auto;
+  width: 80%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.course-page-table th,
+.course-page-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.course-page-table th {
+  background-color: #f2f2f2;
+}
+
+.course-page-action-button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.course-page-action-button:hover {
+  background-color: #0056b3;
+}
+
+
+/* Style for course header specific to the course page */
+.course-header {
+  display: flex;
+  justify-content: space-between; /* Space between the link and logout */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: blue; /* Background color for the course page header */
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding is included in the total width */
+}
+
+/* Course-specific navigation container */
+.course-nav {
+  display: flex;
+  justify-content: flex-start; /* Align course link to the left */
+  flex-grow: 1; /* Allow the nav to grow and take remaining space */
+}
+
+/* Navigation link styling specific to the course page */
+.course-nav a {
+  text-decoration: none;
+  font-size: 20px;
+  color: white; /* White text for the link */
+}
+
+/* Style for logout button in the course page */
+.course-logout-button {
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+  margin-left: 10px; /* Add margin to the left to move the button slightly to the left */
+}
+
+.course-logout-button:hover {
+  background-color: #e60000; /* Darker red on hover */
+}

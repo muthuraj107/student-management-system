@@ -30,6 +30,11 @@ const Header = () => {
             </div>
           </div>
         )}
+        {role && role === "Admin" && (
+          <div className="">
+            <Link to="/course">Course</Link>
+          </div>
+        )}
         {/* Students Dropdown */}
         <div className="dropdown dropdown-2">
           <span>Students</span>
@@ -39,7 +44,7 @@ const Header = () => {
             <Link to={`/enqiryview`}>Enquiry</Link>
           </div>
         </div>
-       
+
         <button className="logout-button" onClick={handleLogout}>
           Logout
         </button>

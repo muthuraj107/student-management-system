@@ -114,32 +114,10 @@ body {
   height: 42px;                   /* Set equal height */
   box-sizing: border-box;         /* Include padding in the element's height */
 }
-
 .search-bar button:hover {
   background-color: #218838;      /* Darken button color on hover */
 }
-
-
 /* Table styling */
-table {
-  width: 100%;                    /* Full-width table */
-  border-collapse: collapse;      /* Remove gaps between cells */
-  margin: 20px 0;                 /* Space above and below the table */
-}
-
-table, th, td {
-  border: 1px solid #ddd;         /* Light grey border around the table */
-}
-
-th, td {
-  padding: 10px;                  /* Padding inside cells */
-  text-align: left;               /* Align text to the left */
-}
-
-th {
-  background-color: #f8f9fa;      /* Light background for table headers */
-}
-
 
 /* Dropdown container */
 .dropdown {
@@ -150,9 +128,6 @@ th {
 .dropdown-2{
   padding-right: 30px;
 }
-
-
-
 
 /* Dropdown content */
 .dropdown-content {
@@ -171,14 +146,10 @@ th {
   text-decoration: none;          /* Remove underline */
   display: block;                 /* Block-level links to fill width */
 }
-
-
 /* Show dropdown content when hovering */
 .dropdown:hover .dropdown-content {
   display: block;                 /* Display the dropdown content on hover */
 }
-
-
 /* Dropdown text (no button styling) */
 .dropdown span {
   color: white;
@@ -190,24 +161,18 @@ th {
   position: relative;
   margin-right: 20px;
 }
-
-
 /* General header styling */
-
-
 /* Navigation links */
 .header .nav {
   display: flex;
   align-items: center;
 }
-
 .header .nav a {
   color: white;
   text-decoration: none;
   margin-right: 20px;
   padding: 10px;
 }
-
 .header .nav a:hover {
   background-color: #1e55df;
   border-radius: 5px;
@@ -220,3 +185,32 @@ th {
 
 
 
+/* filter style for  std details */
+.status.ongoing {
+  color: green;
+}
+
+.status.passout {
+  color: red;
+}
+.filter-options {
+  margin-bottom: 20px;
+}
+
+.filter-options button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-options button:hover {
+  background-color: #2980b9;
+}
+
+.filter-options button:active {
+  background-color: #1f6aa5;
+}
