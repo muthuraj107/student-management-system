@@ -42,7 +42,7 @@ const Login = () => {
 
       localStorage.removeItem("role");
       localStorage.setItem("role", "Admin");
-      navigate("/dashboard",{replace:true});
+      navigate("/dashboard", {replace:true});
     } else {
       if (staffEmail === "" || staffPassword === "") {
         alert("Please fill in all the fields.");
