@@ -24,8 +24,7 @@ A web application designed to facilitate the management of student and staff det
   - View detailed profiles of students.
   - Track academic performance and attendance.
 
-- **Responsive Design**: 
-  - User-friendly interface that works on various devices.
+
 
 ## Technologies Used
 
