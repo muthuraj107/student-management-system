@@ -8,9 +8,6 @@ A web application designed to facilitate the management of student and staff det
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
