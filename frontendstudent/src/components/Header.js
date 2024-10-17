@@ -6,7 +6,7 @@ const Header = () => {
   const navigate=useNavigate()
   const handleLogout = () => {
     localStorage.removeItem("role");
-    navigate("/");
+    navigate("/", { replace: true });
   };
   return (
     <div className="header">

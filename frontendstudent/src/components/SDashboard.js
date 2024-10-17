@@ -3,11 +3,13 @@ import { FaUserGraduate } from "react-icons/fa";
 import Header from "./Header";
 import axios from "axios";
 import "./SDashboard.css";
-
+import { useLocation } from "react-router-dom";
 const Staffdashboard = () => {
   const [data, setData] = useState();
   const [filteredData, setFilteredData] = useState([]);
-const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const location = useLocation();
+  const staffEmail = location.state?.email || "No email provided";
 
   const getData = async () => {
     try {
@@ -26,18 +28,19 @@ const [searchQuery, setSearchQuery] = useState("");
     });
     setFilteredData(filteredData);
   };
- const handleInputChange = (e) => {
-   setSearchQuery(e.target.value); 
- };
+  const handleInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
   return (
     <div>
       <Header />
+      <h1>Welcome, {staffEmail}!</h1>
       <div className="flex-container">
         <div className="card">
           <FaUserGraduate size={36} />
 
           <div>Student Total Count</div>
-          <div>{data?.length||10}</div>
+          <div>{data?.length || 10}</div>
         </div>
 
         {/* Search Bar */}
